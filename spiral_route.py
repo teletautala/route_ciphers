@@ -1,4 +1,19 @@
 
+eol = '\n'
+def collapse_matrix(matrix):
+    collapsed_matrix = eol.join(matrix)
+    return collapsed_matrix
+
+def collate_matrix(matrix):
+    collated_matrix = []
+    max_rows = len(matrix) - 1
+    for row in range(max_rows):
+        collated_matrix.append(''.join(matrix[row]))
+    return collated_matrix
+
+def shift_text(text, offset):
+    new_text = text[offset:] + text[0:offset]
+    return new_text
 
 def sort_list(list, order="forward"):
     sorted_list = list
@@ -76,8 +91,13 @@ def main():
     text = '?OBKRUOXOGHULBSOLIFBBWFLRVQQPRNGKSSOTWTQSJQSSEKZZWATJKLUDIAWINFBNYPVTTMZFPKWGDKZXTJCDIGKUHUAUEKCAR'
     rows = 7
     columns = 14
-    print spiral_route_cipher(text, rows, columns, direction = "counter-clockwise") 
-
+    for offset in range(0, len(text)):
+        shifted_text = shift_text(text, offset)
+        #new_matrix = ['' for x in range(rows)]
+        new_matrix = spiral_route_cipher(shifted_text, rows, columns, direction = "counter-clockwise") 
+        matrix_collated_columns = collate_matrix(new_matrix)
+        matrix_collated_text = collapse_matrix(matrix_collated_columns)
+        print matrix_collated_text, eol
 
 if __name__ == "__main__":
     main()
